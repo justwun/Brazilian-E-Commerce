@@ -74,7 +74,7 @@ CREATE TABLE order_reviews(
 
 CREATE TABLE order_payments (
 	order_id VARCHAR(50),
-    payment_sequential INT CHECK (payment_sequential BETWEEN 1 AND 5),
+    payment_sequential INT,
     payment_type VARCHAR(20),
     payment_installments INT,
     payment_value DECIMAL(10,2),
@@ -98,8 +98,6 @@ FOREIGN KEY (seller_zip_code_prefix) REFERENCES geolocation(geolocation_zip_code
 ALTER TABLE customers 
 ADD CONSTRAINT fk_customer_geolocation 
 FOREIGN KEY (customer_zip_code_prefix) REFERENCES geolocation(geolocation_zip_code_prefix);
-
-
 
 
 

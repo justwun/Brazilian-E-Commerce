@@ -8,7 +8,6 @@ ENCLOSED BY '"'
 LINES TERMINATED BY '\n'
 IGNORE 1 ROWS;
 
-
 LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/olist_orders_dataset.csv'
 INTO TABLE orders
 FIELDS TERMINATED BY ',' 
@@ -92,10 +91,50 @@ ENCLOSED BY '"'
 LINES TERMINATED BY '\n' 
 IGNORE 1 ROWS;
 
+LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/olist_order_payments_dataset.csv'
+INTO TABLE order_payments
+FIELDS TERMINATED BY ',' 
+ENCLOSED BY '"' 
+LINES TERMINATED BY '\n' 
+IGNORE 1 ROWS;
 
+SELECT count(*) FROM order_payments;
 
+LOAD DATA INFILE 'C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/olist_geolocation_dataset.csv'
+IGNORE INTO TABLE geolocation
+FIELDS TERMINATED BY ',' 
+ENCLOSED BY '"' 
+LINES TERMINATED BY '\n' 
+IGNORE 1 ROWS;
 
+select count(*) from geolocation;
 
+SELECT DISTINCT seller_zip_code_prefix 
+FROM sellers 
+WHERE seller_zip_code_prefix NOT IN (SELECT geolocation_zip_code_prefix FROM geolocation);
 
-    
+SET SQL_SAFE_UPDATES = 0;
+
+SET FOREIGN_KEY_CHECKS = 0;
+
+DELETE FROM order_items  
+WHERE seller_id IN (SELECT seller_id FROM sellers WHERE seller_zip_code_prefix NOT IN (SELECT geolocation_zip_code_prefix FROM geolocation));
+
+DELETE FROM sellers  
+WHERE seller_zip_code_prefix NOT IN (SELECT geolocation_zip_code_prefix FROM geolocation);
+
+SET FOREIGN_KEY_CHECKS = 1;
+
+SET SQL_SAFE_UPDATES = 1;
+-- delete the unmatch foreign key
+SET SQL_SAFE_UPDATES = 0;
+
+SET FOREIGN_KEY_CHECKS = 0;
+
+DELETE FROM customers 
+WHERE customer_zip_code_prefix NOT IN (SELECT geolocation_zip_code_prefix FROM geolocation);
+
+SET FOREIGN_KEY_CHECKS = 1;
+
+SET SQL_SAFE_UPDATES = 1;
 

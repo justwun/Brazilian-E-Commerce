@@ -8,6 +8,8 @@ CREATE TABLE customers (
     customer_city VARCHAR(50),
     customer__state VARCHAR(2)
     );
+ 
+ 
     
 CREATE TABLE orders (
 	order_id VARCHAR(50) PRIMARY KEY,
@@ -96,6 +98,8 @@ FOREIGN KEY (seller_zip_code_prefix) REFERENCES geolocation(geolocation_zip_code
 ALTER TABLE customers 
 ADD CONSTRAINT fk_customer_geolocation 
 FOREIGN KEY (customer_zip_code_prefix) REFERENCES geolocation(geolocation_zip_code_prefix);
+
+
 
 
 

@@ -9,7 +9,7 @@ CREATE TABLE customers (
     customer__state VARCHAR(2)
     );
  
- 
+ DESCRIBE customers;
     
 CREATE TABLE orders (
 	order_id VARCHAR(50) PRIMARY KEY,
@@ -23,6 +23,8 @@ CREATE TABLE orders (
     FOREIGN KEY (customer_id) REFERENCES customers(customer_id)
     );
 
+DESCRIBE orders;
+
 CREATE TABLE order_items (
 	order_id VARCHAR(50),
     order_item_id INT,
@@ -34,7 +36,8 @@ CREATE TABLE order_items (
     PRIMARY KEY(order_id,order_item_id),
     FOREIGN KEY (order_id) REFERENCES orders(order_id)
     );
-    
+
+
 CREATE TABLE products (
 	product_id VARCHAR(50) PRIMARY KEY,
     product_category_name VARCHAR(50),

@@ -19,9 +19,12 @@ CREATE TABLE orders (
     order_approve_at DATETIME,
     order_delivered_carrier_date DATETIME,
     order_delivered_customer_date DATETIME,
-    order_estimated_delivery_date DATETIME,
-    FOREIGN KEY (customer_id) REFERENCES customers(customer_id)
+    order_estimated_delivery_date DATETIME
     );
+
+ALTER TABLE orders 
+ADD CONSTRAINT fk_order_customer FOREIGN KEY (customer_id) REFERENCES customers(customer_id);
+
 
 DESCRIBE orders;
 

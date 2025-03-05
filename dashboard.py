@@ -3,26 +3,24 @@ import pymysql
 import pandas as pd
 import matplotlib.pyplot as plt
 
-# Kết nối MySQL
 def get_connection():
     return pymysql.connect(
-        host="127.0.0.1",  # Thay bằng IP server MySQL của bạn
-        user="root",  # Username của MySQL
-        password="quan21042004",  # Thay bằng mật khẩu MySQL
-        database="olist_db"  # Thay bằng tên database của bạn
+        host="127.0.0.1",  
+        user="root",  
+        password="******",  
+        database="olist_db"  
     )
 
-# Lấy dữ liệu từ MySQL
 def get_data(query):
     conn = get_connection()
     df = pd.read_sql(query, conn)
     conn.close()
     return df
 
-# Streamlit UI
+
 st.title("📊 Olist Sales Dashboard")
 
-# 1️⃣ Tổng số đơn hàng theo tháng
+
 st.subheader("Tổng số đơn hàng theo tháng")
 query = """
     SELECT DATE_FORMAT(order_purchase_timestamp, '%Y-%m') AS order_month, COUNT(*) AS total_orders
@@ -33,7 +31,6 @@ query = """
 df_orders = get_data(query)
 st.line_chart(df_orders.set_index("order_month"))
 
-# 2️⃣ Top 5 khách hàng đặt nhiều nhất
 st.subheader("Top 5 khách hàng có nhiều đơn hàng nhất")
 query = """
     SELECT customer_id, COUNT(*) AS total_orders
@@ -45,7 +42,7 @@ query = """
 df_top_customers = get_data(query)
 st.dataframe(df_top_customers)
 
-# 3️⃣ Doanh thu theo danh mục sản phẩm
+
 st.subheader("Doanh thu theo danh mục sản phẩm")
 query = """
     SELECT p.product_category_name, SUM(oi.price) AS total_revenue
@@ -57,7 +54,6 @@ query = """
 """
 df_revenue = get_data(query)
 
-# Vẽ biểu đồ
 fig, ax = plt.subplots()
 ax.bar(df_revenue["product_category_name"], df_revenue["total_revenue"])
 plt.xticks(rotation=45)

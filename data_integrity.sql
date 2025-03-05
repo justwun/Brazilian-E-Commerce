@@ -71,4 +71,3 @@ SELECT 'customers', 'customer_unique_id' FROM customers WHERE customer_unique_id
 UNION ALL
 SELECT 'products', 'product_category_name' FROM products WHERE product_category_name IS NOT NULL;
 
-

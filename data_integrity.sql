@@ -55,7 +55,7 @@ FROM orders
 GROUP BY order_id, customer_id 
 HAVING COUNT(*) > 1;
 
--- CHECK VALID ORDER DATE
+-- CHECK INVALID ORDER DATE
 SELECT * FROM orders 
 WHERE order_delivered_customer_date < order_purchase_timestamp;
 

@@ -36,6 +36,7 @@ SET FOREIGN_KEY_CHECKS = 1;
 
 SET SQL_SAFE_UPDATES = 1;
 
+SELECT * FROM orders WHERE customer_id IS NULL;
 
 
 
